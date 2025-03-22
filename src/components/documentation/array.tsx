@@ -1,4 +1,4 @@
-// components/ArrayDocumentation.tsx
+// ./src/components/documentation/array.tsx
 import React, { useState } from "react";
 
 const ArrayDocumentation: React.FC = () => {
@@ -6,7 +6,7 @@ const ArrayDocumentation: React.FC = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-black">Array Operations Documentation</h2>
+      <h2 className="text-2xl font-bold mb-4 text-black">Array Data Structure</h2>
 
       {/* Introduction to Arrays */}
       <div className="mb-6">
@@ -25,8 +25,8 @@ const ArrayDocumentation: React.FC = () => {
         <h3 className="text-lg font-semibold text-black mb-2">How Arrays Are Implemented?</h3>
         <p className="text-black mb-2">
           Arrays are implemented as a fixed-size or dynamic-size collection, depending on the language. In languages
-          like C++ and Java, you can use static arrays (fixed size) or dynamic arrays (like `vector` or `ArrayList`).
-          In Python and JavaScript, arrays are inherently dynamic.
+          like C++ and Java, you can use static arrays (fixed size) or dynamic arrays (like <code>vector</code> or{' '}
+          <code>ArrayList</code>). In Python and JavaScript, arrays are inherently dynamic.
         </p>
       </div>
 
@@ -34,7 +34,7 @@ const ArrayDocumentation: React.FC = () => {
       <h3 className="text-lg font-semibold text-black mb-2">Language-Specific Examples</h3>
       <p className="text-black mb-4">
         Below are examples of array declaration, initialization, and operations in different languages. Use the tabs
-        to switch between languages and copy-paste code into the "Try Your Code" section above.
+        to switch between languages and copy-paste code into the <code>Try Your Code</code> section above.
       </p>
       <div className="flex gap-4 mb-4">
         <button
@@ -69,18 +69,17 @@ const ArrayDocumentation: React.FC = () => {
           <h3 className="text-lg font-semibold text-black mb-2">JavaScript Arrays</h3>
           <p className="text-black mb-2">
             In JavaScript, arrays are dynamic and can hold mixed data types. They are declared using square brackets or
-            the `Array` constructor.
+            the <code>Array</code> constructor.
           </p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Declaration and Initialization
+            {`// Declaration and Initialization
 let arr = [1, 2, 3, 4, 5] // Simple array
 let arr2 = new Array(5) // Array with 5 empty slots
-arr2[0] = 10 // Assign value
-`}
+arr2[0] = 10 // Assign value`}
           </pre>
           <p className="text-black mb-2">Basic array declaration and initialization in JavaScript.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Add Element
+            {`// Add Element
 async function customOperation(arr, setHighlighted, delay) {
   arr.push(15) // Adds 15 to the end
   return arr
@@ -88,7 +87,7 @@ async function customOperation(arr, setHighlighted, delay) {
           </pre>
           <p className="text-black mb-2">Adds an element to the end of the array.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Delete Element
+            {`// Delete Element
 async function customOperation(arr, setHighlighted, delay) {
   arr.splice(0, 1) // Removes element at index 0
   return arr
@@ -96,7 +95,7 @@ async function customOperation(arr, setHighlighted, delay) {
           </pre>
           <p className="text-black mb-2">Deletes an element at the specified index.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Bubble Sort
+            {`// Bubble Sort
 async function customOperation(arr, setHighlighted, delay) {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length - i - 1; j++) {
@@ -112,7 +111,7 @@ async function customOperation(arr, setHighlighted, delay) {
           </pre>
           <p className="text-black mb-2">Sorts the array with animation for each swap.</p>
           <pre className="bg-gray-800 text-white p-2 rounded">
-{`// Linear Search
+            {`// Linear Search
 async function customOperation(arr, setHighlighted, delay) {
   let value = 9
   for (let i = 0; i < arr.length; i++) {
@@ -134,21 +133,20 @@ async function customOperation(arr, setHighlighted, delay) {
         <div>
           <h3 className="text-lg font-semibold text-black mb-2">C++ Arrays</h3>
           <p className="text-black mb-2">
-            In C++, arrays can be static (fixed size) or dynamic (using `vector`). Static arrays are declared with a
-            size, while `vector` grows dynamically.
+            In C++, arrays can be static (fixed size) or dynamic (using <code>vector</code>). Static arrays are
+            declared with a size, while <code>vector</code> grows dynamically.
           </p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Static Array Declaration
+            {`// Static Array Declaration
 int arr[5] = {1, 2, 3, 4, 5} // Fixed size array
 
 // Dynamic Array (vector)
 #include <vector>
-vector<int> vec = {1, 2, 3, 4, 5} // Dynamic size
-`}
+vector<int> vec = {1, 2, 3, 4, 5} // Dynamic size`}
           </pre>
           <p className="text-black mb-2">Static and dynamic array declaration in C++.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Add Element (vector)
+            {`// Add Element (vector)
 vector<int> customOperation(vector<int> arr) {
   arr.push_back(15)
   return arr
@@ -156,7 +154,7 @@ vector<int> customOperation(vector<int> arr) {
           </pre>
           <p className="text-black mb-2">Adds an element to the end of a vector.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Delete Element (vector)
+            {`// Delete Element (vector)
 vector<int> customOperation(vector<int> arr) {
   arr.erase(arr.begin() + 0) // Remove at index 0
   return arr
@@ -164,7 +162,7 @@ vector<int> customOperation(vector<int> arr) {
           </pre>
           <p className="text-black mb-2">Deletes an element at index 0 from a vector.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Bubble Sort (vector)
+            {`// Bubble Sort (vector)
 vector<int> customOperation(vector<int> arr, function<void(vector<int>)> setHighlighted, function<void(int)> delay) {
   for (int i = 0; i < arr.size(); i++) {
     for (int j = 0; j < arr.size() - i - 1; j++) {
@@ -182,7 +180,7 @@ vector<int> customOperation(vector<int> arr, function<void(vector<int>)> setHigh
           </pre>
           <p className="text-black mb-2">Sorts a vector with animation.</p>
           <pre className="bg-gray-800 text-white p-2 rounded">
-{`// Linear Search (vector)
+            {`// Linear Search (vector)
 int customOperation(vector<int> arr, function<void(vector<int>)> setHighlighted, function<void(int)> delay) {
   int value = 9
   for (int i = 0; i < arr.size(); i++) {
@@ -204,22 +202,21 @@ int customOperation(vector<int> arr, function<void(vector<int>)> setHighlighted,
         <div>
           <h3 className="text-lg font-semibold text-black mb-2">Java Arrays</h3>
           <p className="text-black mb-2">
-            In Java, arrays are static (fixed size), but `ArrayList` provides dynamic resizing. Arrays are declared
-            with a type and size, while `ArrayList` uses generics.
+            In Java, arrays are static (fixed size), but <code>ArrayList</code> provides dynamic resizing. Arrays are
+            declared with a type and size, while <code>ArrayList</code> uses generics.
           </p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Static Array Declaration
+            {`// Static Array Declaration
 int[] arr = {1, 2, 3, 4, 5} // Fixed size array
 
 // Dynamic Array (ArrayList)
 import java.util.ArrayList;
 ArrayList<Integer> list = new ArrayList<>();
-list.add(1); list.add(2); list.add(3); // Initial elements
-`}
+list.add(1); list.add(2); list.add(3); // Initial elements`}
           </pre>
           <p className="text-black mb-2">Static and dynamic array declaration in Java.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Add Element (ArrayList)
+            {`// Add Element (ArrayList)
 ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
   arr.add(15)
   return arr
@@ -227,7 +224,7 @@ ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
           </pre>
           <p className="text-black mb-2">Adds 15 to an ArrayList.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Delete Element (ArrayList)
+            {`// Delete Element (ArrayList)
 ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
   arr.remove(0) // Remove at index 0
   return arr
@@ -235,7 +232,7 @@ ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
           </pre>
           <p className="text-black mb-2">Removes element at index 0 from an ArrayList.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`// Bubble Sort (ArrayList)
+            {`// Bubble Sort (ArrayList)
 ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
   for (int i = 0; i < arr.size(); i++) {
     for (int j = 0; j < arr.size() - i - 1; j++) {
@@ -251,7 +248,7 @@ ArrayList<Integer> customOperation(ArrayList<Integer> arr) {
           </pre>
           <p className="text-black mb-2">Sorts an ArrayList (no animation).</p>
           <pre className="bg-gray-800 text-white p-2 rounded">
-{`// Linear Search (ArrayList)
+            {`// Linear Search (ArrayList)
 int customOperation(ArrayList<Integer> arr) {
   int value = 9
   for (int i = 0; i < arr.size(); i++) {
@@ -270,35 +267,34 @@ int customOperation(ArrayList<Integer> arr) {
         <div>
           <h3 className="text-lg font-semibold text-black mb-2">Python Arrays</h3>
           <p className="text-black mb-2">
-            In Python, "arrays" are typically implemented as dynamic lists. Python also has a separate `array` module
-            for fixed-type arrays, but lists are more common.
+            In Python, arrays are typically implemented as dynamic lists. Python also has a separate{' '}
+            <code>array</code> module for fixed-type arrays, but lists are more common.
           </p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`# List Declaration
+            {`# List Declaration
 arr = [1, 2, 3, 4, 5] # Dynamic list
 
 # Using array module (less common)
 import array
-arr2 = array.array('i', [1, 2, 3, 4, 5]) # 'i' for integer
-`}
+arr2 = array.array('i', [1, 2, 3, 4, 5]) # 'i' for integer`}
           </pre>
           <p className="text-black mb-2">Dynamic list and array module declaration in Python.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`# Add Element
+            {`# Add Element
 def customOperation(arr):
   arr.append(15)
   return arr`}
           </pre>
           <p className="text-black mb-2">Adds 15 to the end of a list.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`# Delete Element
+            {`# Delete Element
 def customOperation(arr):
   arr.pop(0) # Remove at index 0
   return arr`}
           </pre>
           <p className="text-black mb-2">Removes element at index 0 from a list.</p>
           <pre className="bg-gray-800 text-white p-2 rounded mb-2">
-{`# Bubble Sort
+            {`# Bubble Sort
 def customOperation(arr, setHighlighted, delay):
   for i in range(len(arr)):
     for j in range(len(arr) - i - 1):
@@ -310,7 +306,7 @@ def customOperation(arr, setHighlighted, delay):
           </pre>
           <p className="text-black mb-2">Sorts a list with animation.</p>
           <pre className="bg-gray-800 text-white p-2 rounded">
-{`# Linear Search
+            {`# Linear Search
 def customOperation(arr, setHighlighted, delay):
   value = 9
   for i in range(len(arr)):
@@ -343,9 +339,12 @@ def customOperation(arr, setHighlighted, delay):
             </ul>
           </li>
           <li>
-            Use `setHighlighted([index])` to highlight elements in the visualizer (e.g., `[0]` or `[1, 2]`).
+            Use <code>setHighlighted([index])</code> to highlight elements in the visualizer (e.g.,{' '}
+            <code>[0]</code> or <code>[1, 2]</code>).
           </li>
-          <li>Use `delay(500)` or `await delay(500)` for animation delays (500ms).</li>
+          <li>
+            Use <code>delay(500)</code> or <code>await delay(500)</code> for animation delays (500ms).
+          </li>
           <li>Return the array for operations like add, delete, sort.</li>
           <li>Return an index (or -1) for search operations.</li>
         </ul>
