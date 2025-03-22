@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { arrayElementVariants, containerVariants } from "./animations";
-import { questionCode } from "./codeQuestions";
+
 import CodeDisplay from "./codeDisplay";
 
 interface ArrayQuestionVisualizerProps {
