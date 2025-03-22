@@ -37,6 +37,14 @@ const Home: React.FC = () => {
             </p>
           </div>
         </Link>
+          <Link href="/graph">
+          <div className="w-64 h-80 bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center hover:bg-blue-50 transition cursor-pointer">
+            <h2 className="text-2xl font-semibold text-black mb-4">Tree Visualizer</h2>
+            <p className="text-black text-center">
+              Visualize binary tree operations like insert, delete, and search.
+            </p>
+          </div>
+        </Link>
       </div>
     </div>
   );
