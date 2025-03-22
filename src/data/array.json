@@ -1,0 +1,243 @@
+{
+    "topics": {
+      "introduction": {
+        "title": "Introduction to Arrays",
+        "content": [
+          {
+            "subtitle": "What is an Array?",
+            "types": "General",
+            "text": "An array is a linear data structure that stores a collection of elements of the same type in contiguous memory locations. Elements are accessed using a zero-based index."
+          },
+          {
+            "subtitle": "Why Use Arrays?",
+            "types": "General",
+            "text": "Arrays offer O(1) time complexity for accessing elements by index, making them efficient for storing and retrieving ordered data. They are foundational for many algorithms."
+          },
+          {
+            "subtitle": "Static vs Dynamic Arrays",
+            "types": "Static/Dynamic",
+            "text": "Static arrays have a fixed size (e.g., C-style arrays), while dynamic arrays (e.g., JavaScript arrays, C++ vectors) can grow or shrink during runtime."
+          }
+        ]
+      },
+      "declaration": {
+        "title": "Array Declaration and Initialization",
+        "content": [
+          {
+            "subtitle": "JavaScript",
+            "types": "Dynamic",
+            "text": "JavaScript arrays are dynamic and can store mixed data types.",
+            "code": "let arr = [1, 'hello', true];\nlet arr2 = new Array(3); // Creates array of length 3\narr2[0] = 10;"
+          },
+          {
+            "subtitle": "C++",
+            "types": "Static/Dynamic",
+            "text": "C++ supports static arrays and dynamic vectors from the STL.",
+            "code": "int arr[5] = {1, 2, 3, 4, 5}; // Static\n#include <vector>\nstd::vector<int> vec = {1, 2, 3}; // Dynamic"
+          },
+          {
+            "subtitle": "Java",
+            "types": "Static/Dynamic",
+            "text": "Java uses static arrays and dynamic ArrayLists.",
+            "code": "int[] arr = {1, 2, 3, 4, 5}; // Static\nimport java.util.ArrayList;\nArrayList<Integer> list = new ArrayList<>();\nlist.add(1);"
+          },
+          {
+            "subtitle": "Python",
+            "types": "Dynamic",
+            "text": "Python lists are dynamic by default; the 'array' module provides type-specific arrays.",
+            "code": "arr = [1, 2, 3, 4, 5]; // Dynamic list\nimport array\narr2 = array.array('i', [1, 2, 3]); // Integer array"
+          }
+        ]
+      },
+      "operations": {
+        "title": "Array Operations",
+        "content": [
+          {
+            "subtitle": "Accessing Elements",
+            "types": "General",
+            "text": "Elements are accessed using their index in O(1) time.",
+            "examples": {
+              "javascript": "let arr = [10, 20, 30];\nconsole.log(arr[1]); // Output: 20",
+              "cpp": "int arr[3] = {10, 20, 30};\ncout << arr[1]; // Output: 20",
+              "java": "int[] arr = {10, 20, 30};\nSystem.out.println(arr[1]); // Output: 20",
+              "python": "arr = [10, 20, 30]\nprint(arr[1]) # Output: 20"
+            }
+          },
+          {
+            "subtitle": "Adding Elements",
+            "types": "Dynamic",
+            "text": "Adds an element to the end (dynamic arrays only).",
+            "examples": {
+              "javascript": "let arr = [1, 2];\narr.push(3);\nconsole.log(arr); // [1, 2, 3]",
+              "cpp": "#include <vector>\nstd::vector<int> vec = {1, 2};\nvec.push_back(3);",
+              "java": "import java.util.ArrayList;\nArrayList<Integer> list = new ArrayList<>();\nlist.add(1);\nlist.add(2);",
+              "python": "arr = [1, 2]\narr.append(3)\nprint(arr) # [1, 2, 3]"
+            }
+          },
+          {
+            "subtitle": "Removing Elements",
+            "types": "Dynamic",
+            "text": "Removes an element from the array.",
+            "examples": {
+              "javascript": "let arr = [1, 2, 3];\narr.pop(); // Removes last element\nconsole.log(arr); // [1, 2]",
+              "cpp": "std::vector<int> vec = {1, 2, 3};\nvec.pop_back();",
+              "java": "ArrayList<Integer> list = new ArrayList<>();\nlist.add(1); list.add(2);\nlist.remove(0);",
+              "python": "arr = [1, 2, 3]\narr.pop(0) # Removes at index 0\nprint(arr) # [2, 3]"
+            }
+          },
+          {
+            "subtitle": "Updating Elements",
+            "types": "General",
+            "text": "Modify an element at a specific index.",
+            "examples": {
+              "javascript": "let arr = [1, 2, 3];\narr[1] = 5;\nconsole.log(arr); // [1, 5, 3]",
+              "cpp": "int arr[3] = {1, 2, 3};\narr[1] = 5;",
+              "java": "int[] arr = {1, 2, 3};\narr[1] = 5;",
+              "python": "arr = [1, 2, 3]\narr[1] = 5\nprint(arr) # [1, 5, 3]"
+            }
+          }
+        ]
+      },
+      "traversal": {
+        "title": "Array Traversal",
+        "content": [
+          {
+            "subtitle": "Iterating Over Arrays",
+            "types": "General",
+            "text": "Traversal involves visiting each element of the array.",
+            "examples": {
+              "javascript": "let arr = [1, 2, 3];\nfor(let i = 0; i < arr.length; i++) {\n  console.log(arr[i]);\n}",
+              "cpp": "int arr[3] = {1, 2, 3};\nfor(int i = 0; i < 3; i++) {\n  cout << arr[i] << ' ';\n}",
+              "java": "int[] arr = {1, 2, 3};\nfor(int i = 0; i < arr.length; i++) {\n  System.out.print(arr[i] + ' ');\n}",
+              "python": "arr = [1, 2, 3]\nfor x in arr:\n  print(x, end=' ')"
+            }
+          }
+        ]
+      },
+      "searching": {
+        "title": "Array Searching",
+        "content": [
+          {
+            "subtitle": "Linear Search",
+            "types": "General",
+            "text": "Searches sequentially with O(n) time complexity.",
+            "examples": {
+              "javascript": "function linearSearch(arr, target) {\n  for(let i = 0; i < arr.length; i++) {\n    if(arr[i] === target) return i;\n  }\n  return -1;\n}\nconsole.log(linearSearch([1, 2, 3], 2)); // 1",
+              "cpp": "int linearSearch(int arr[], int n, int target) {\n  for(int i = 0; i < n; i++) {\n    if(arr[i] == target) return i;\n  }\n  return -1;\n}",
+              "java": "int linearSearch(int[] arr, int target) {\n  for(int i = 0; i < arr.length; i++) {\n    if(arr[i] == target) return i;\n  }\n  return -1;\n}",
+              "python": "def linear_search(arr, target):\n  for i in range(len(arr)):\n    if arr[i] == target:\n      return i\n  return -1"
+            }
+          },
+          {
+            "subtitle": "Binary Search",
+            "types": "Sorted",
+            "text": "Efficiently searches a sorted array in O(log n) time.",
+            "examples": {
+              "javascript": "function binarySearch(arr, target) {\n  let left = 0, right = arr.length - 1;\n  while(left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    if(arr[mid] === target) return mid;\n    if(arr[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n  return -1;\n}\nconsole.log(binarySearch([1, 2, 3, 4], 3)); // 2",
+              "cpp": "int binarySearch(int arr[], int n, int target) {\n  int left = 0, right = n - 1;\n  while(left <= right) {\n    int mid = (left + right) / 2;\n    if(arr[mid] == target) return mid;\n    if(arr[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n  return -1;\n}"
+            }
+          }
+        ]
+      },
+      "sorting": {
+        "title": "Array Sorting",
+        "content": [
+          {
+            "subtitle": "Bubble Sort",
+            "types": "General",
+            "text": "Simple sorting algorithm with O(n^2) time complexity.",
+            "examples": {
+              "javascript": "function bubbleSort(arr) {\n  for(let i = 0; i < arr.length; i++) {\n    for(let j = 0; j < arr.length - i - 1; j++) {\n      if(arr[j] > arr[j + 1]) {\n        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];\n      }\n    }\n  }\n  return arr;\n}\nconsole.log(bubbleSort([5, 3, 1, 4])); // [1, 3, 4, 5]",
+              "python": "def bubble_sort(arr):\n  for i in range(len(arr)):\n    for j in range(len(arr) - i - 1):\n      if arr[j] > arr[j + 1]:\n        arr[j], arr[j + 1] = arr[j + 1], arr[j]\n  return arr"
+            }
+          },
+          {
+            "subtitle": "Quick Sort",
+            "types": "General",
+            "text": "Efficient sorting algorithm with average O(n log n) time complexity.",
+            "examples": {
+              "javascript": "function quickSort(arr, low = 0, high = arr.length - 1) {\n  if(low < high) {\n    let pivot = arr[high];\n    let i = low - 1;\n    for(let j = low; j < high; j++) {\n      if(arr[j] <= pivot) {\n        i++;\n        [arr[i], arr[j]] = [arr[j], arr[i]];\n      }\n    }\n    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];\n    let pi = i + 1;\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n  return arr;\n}"
+            }
+          }
+        ]
+      },
+      "multidimensional": {
+        "title": "Multidimensional Arrays",
+        "content": [
+          {
+            "subtitle": "2D Arrays",
+            "types": "General",
+            "text": "Arrays of arrays, useful for representing matrices or grids.",
+            "examples": {
+              "javascript": "let matrix = [[1, 2], [3, 4]];\nconsole.log(matrix[1][0]); // 3",
+              "cpp": "int matrix[2][2] = {{1, 2}, {3, 4}};\ncout << matrix[1][0]; // 3",
+              "java": "int[][] matrix = {{1, 2}, {3, 4}};\nSystem.out.println(matrix[1][0]); // 3",
+              "python": "matrix = [[1, 2], [3, 4]]\nprint(matrix[1][0]) # 3"
+            }
+          }
+        ]
+      }
+    },
+    "questions": [
+      {
+        "question": "Write a function to find the maximum element in an array.",
+        "code": {
+          "javascript": "function findMax(arr) {\n  let max = arr[0];\n  for(let i = 1; i < arr.length; i++) {\n    if(arr[i] > max) max = arr[i];\n  }\n  return max;\n}\nconsole.log(findMax([1, 5, 3, 9])); // 9"
+        }
+      },
+      {
+        "question": "Reverse an array in place.",
+        "code": {
+          "python": "def reverse_array(arr):\n  left, right = 0, len(arr) - 1\n  while left < right:\n    arr[left], arr[right] = arr[right], arr[left]\n    left += 1\n    right -= 1\n  return arr\nprint(reverse_array([1, 2, 3])) # [3, 2, 1]"
+        }
+      },
+      {
+        "question": "Check if an array contains a specific element.",
+        "code": {
+          "cpp": "bool contains(int arr[], int n, int target) {\n  for(int i = 0; i < n; i++) {\n    if(arr[i] == target) return true;\n  }\n  return false;\n}"
+        }
+      },
+      {
+        "question": "Find the sum of all elements in an array.",
+        "code": {
+          "java": "int arraySum(int[] arr) {\n  int sum = 0;\n  for(int i = 0; i < arr.length; i++) {\n    sum += arr[i];\n  }\n  return sum;\n}"
+        }
+      },
+      {
+        "question": "Rotate an array to the right by k steps.",
+        "code": {
+          "javascript": "function rotateArray(arr, k) {\n  k = k % arr.length;\n  let temp = arr.slice(-k);\n  return temp.concat(arr.slice(0, arr.length - k));\n}\nconsole.log(rotateArray([1, 2, 3, 4], 2)); // [3, 4, 1, 2]"
+        }
+      },
+      {
+        "question": "Merge two sorted arrays into one sorted array.",
+        "code": {
+          "python": "def merge_sorted_arrays(arr1, arr2):\n  result = []\n  i = j = 0\n  while i < len(arr1) and j < len(arr2):\n    if arr1[i] < arr2[j]:\n      result.append(arr1[i])\n      i += 1\n    else:\n      result.append(arr2[j])\n      j += 1\n  result.extend(arr1[i:])\n  result.extend(arr2[j:])\n  return result\nprint(merge_sorted_arrays([1, 3], [2, 4])) # [1, 2, 3, 4]"
+        }
+      },
+      {
+        "question": "Find the second largest element in an array.",
+        "code": {
+          "cpp": "int secondLargest(int arr[], int n) {\n  int first = arr[0], second = -1;\n  for(int i = 1; i < n; i++) {\n    if(arr[i] > first) {\n      second = first;\n      first = arr[i];\n    } else if(arr[i] > second && arr[i] != first) {\n      second = arr[i];\n    }\n  }\n  return second;\n}"
+        }
+      },
+      {
+        "question": "Remove duplicates from a sorted array in place.",
+        "code": {
+          "java": "int removeDuplicates(int[] arr) {\n  if(arr.length == 0) return 0;\n  int k = 1;\n  for(int i = 1; i < arr.length; i++) {\n    if(arr[i] != arr[k - 1]) {\n      arr[k] = arr[i];\n      k++;\n    }\n  }\n  return k;\n}"
+        }
+      },
+      {
+        "question": "Find pairs in an array with a given sum.",
+        "code": {
+          "javascript": "function findPairs(arr, sum) {\n  let pairs = [];\n  let seen = new Set();\n  for(let num of arr) {\n    let complement = sum - num;\n    if(seen.has(complement)) {\n      pairs.push([complement, num]);\n    }\n    seen.add(num);\n  }\n  return pairs;\n}\nconsole.log(findPairs([1, 5, 7, 1], 6)); // [[5, 1], [1, 5]]"
+        }
+      },
+      {
+        "question": "Move all zeros to the end of an array.",
+        "code": {
+          "python": "def move_zeros(arr):\n  result = [x for x in arr if x != 0]\n  result.extend([0] * (len(arr) - len(result)))\n  return result\nprint(move_zeros([0, 1, 0, 3, 12])) # [1, 3, 12, 0, 0]"
+        }
+      }
+    ]
+  }
