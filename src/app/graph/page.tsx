@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import GraphVisualizer from "../../components/GraphVisualizer";
-import CodeDisplay from "../../components/CodeDisplay";
+import GraphVisualizer from "../../components/graph/GraphVisualizer";
+import CodeDisplay from "../../components/tree/CodeDisplay";
 
 const GraphPage: React.FC = () => {
   const [code, setCode] = useState<string>("");
