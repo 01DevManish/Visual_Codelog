@@ -48,7 +48,7 @@ const CodeDisplay: React.FC<CodeDisplayProps> = ({ code }) => {
   }, [displayCode, activeTab]);
 
   return (
-    <div className="bg-gray-800 text-white p-4 rounded-lg h-[500px] overflow-auto">
+    <div className="bg-gray-800 text-white p-4 rounded-lg h-auto overflow-auto">
       <h2 className="text-xl font-bold mb-4">Code Output</h2>
       <div className="flex gap-2 mb-4">
         <button
