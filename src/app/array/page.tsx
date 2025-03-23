@@ -22,11 +22,10 @@ interface Section {
 const ArrayPage: React.FC = () => {
   const [array, setArray] = useState<number[]>([5, 2, 9, 1, 7]);
   const [code, setCode] = useState<string>("");
-  
-  const [activeTab, setActiveTab] = useState<string>("javascript");
+
 
  
-  const languages = ["javascript", "cpp", "java", "python"];
+
 
   return (
     <div className="h-screen w-screen bg-gray-100 flex flex-col overflow-auto">
