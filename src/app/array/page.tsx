@@ -5,18 +5,6 @@ import ArrayVisualizer from "../../components/array/ArrayVisualizer";
 import CodeDisplay from "../../components/array/CodeDisplay";
 
 
-interface Section {
-  subtitle: string;
-  types: string;
-  text: string;
-  code?: string;
-  examples?: Record<string, string | undefined>;
-  example?: string;
-}
-
-
-
-
 
 
 const ArrayPage: React.FC = () => {
