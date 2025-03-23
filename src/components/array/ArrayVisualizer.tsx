@@ -13,20 +13,29 @@ interface ArrayVisualizerProps {
 const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setCode }) => {
   const [highlighted, setHighlighted] = useState<number[]>([]);
   const [operation, setOperation] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   
   const [insertValue, setInsertValue] = useState<string>("");
   const [insertIndex, setInsertIndex] = useState<string>("");
-  const [deleteIndex, setDeleteIndex] = useState<string>("");
   const [updateIndex, setUpdateIndex] = useState<string>("");
   const [updateValue, setUpdateValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<string>("");
+  const [deleteIndex, setDeleteIndex] = useState<string>("");
+  const [splitIndex, setSplitIndex] = useState<string>("");
+  const [secondArray, setSecondArray] = useState<number[]>([]);
   const [sortMethod, setSortMethod] = useState<string>("bubble");
   const [searchMethod, setSearchMethod] = useState<string>("linear");
-  const [secondArray, setSecondArray] = useState<number[]>([]);
-  const [splitIndex, setSplitIndex] = useState<string>("");
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Helper function to check if array is sorted
+  const isArraySorted = (arr: number[]): boolean => {
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] > arr[i + 1]) return false;
+    }
+    return true;
+  };
 
   // Basic Operations
   const insertElement = async (): Promise<void> => {
@@ -39,27 +48,14 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
       setArray(arr);
       setHighlighted([index]);
       setCode(codeExamples.insert.javascript);
+      setMessage(`Inserted ${numValue} at index ${index}`);
       await delay(500);
       setOperation("");
       setHighlighted([]);
       setInsertValue("");
       setInsertIndex("");
-    }
-  };
-
-  const deleteElement = async (): Promise<void> => {
-    const index = Number(deleteIndex);
-    if (!isNaN(index) && index >= 0 && index < array.length) {
-      setOperation("deleted");
-      setHighlighted([index]);
-      await delay(500);
-      const arr = [...array];
-      arr.splice(index, 1);
-      setArray(arr);
-      setCode(codeExamples.delete.javascript);
-      setHighlighted([]);
-      setOperation("");
-      setDeleteIndex("");
+      await delay(2000);
+      setMessage("");
     }
   };
 
@@ -73,31 +69,116 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
       arr[index] = value;
       setArray(arr);
       setCode(codeExamples.update.javascript);
+      setMessage(`Updated index ${index} to value ${value}`);
       await delay(400);
       setHighlighted([]);
       setOperation("");
       setUpdateIndex("");
       setUpdateValue("");
+      await delay(2000);
+      setMessage("");
     }
   };
 
-  const traverseArray = async (): Promise<void> => {
+  const linearSearch = async (): Promise<void> => {
+    const value = Number(searchValue);
     for (let i = 0; i < array.length; i++) {
       setHighlighted([i]);
-      await delay(300);
+      setOperation("highlighted");
+      if (array[i] === value) {
+        setOperation("searched");
+        setSearchResult(`Found ${value} at index ${i}`);
+        setCode(codeExamples.linearSearch.javascript);
+        setMessage(`Found ${value} at index ${i} using Linear Search`);
+        await delay(600);
+        setHighlighted([]);
+        setOperation("");
+        await delay(2000);
+        setMessage("");
+        setSearchValue("");
+        return;
+      }
+      await delay(500);
     }
-    setCode(codeExamples.traverse.javascript);
+    setSearchResult(`${value} not found`);
+    setCode(codeExamples.linearSearch.javascript);
+    setMessage(`${value} not found in array using Linear Search`);
     setHighlighted([]);
+    setOperation("");
+    await delay(2000);
+    setMessage("");
+    setSearchValue("");
   };
 
-  const mergeArrays = async (): Promise<void> => {
-    setOperation("merged");
-    const arr = [...array, ...secondArray];
-    setArray(arr);
-    setCode(codeExamples.merge.javascript);
-    await delay(500);
+  const binarySearch = async (): Promise<void> => {
+    if (!isArraySorted(array)) {
+      setMessage("Sort the array first for applying Binary Search");
+      await delay(2000);
+      setMessage("");
+      return;
+    }
+    const value = Number(searchValue);
+    let left = 0, right = array.length - 1;
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+      setHighlighted([mid]);
+      setOperation("highlighted");
+      if (array[mid] === value) {
+        setOperation("searched");
+        setSearchResult(`Found ${value} at index ${mid}`);
+        setCode(codeExamples.binarySearch.javascript);
+        setMessage(`Found ${value} at index ${mid} using Binary Search`);
+        await delay(600);
+        setHighlighted([]);
+        setOperation("");
+        await delay(2000);
+        setMessage("");
+        setSearchValue("");
+        return;
+      }
+      if (array[mid] < value) left = mid + 1;
+      else right = mid - 1;
+      await delay(500);
+    }
+    setSearchResult(`${value} not found`);
+    setCode(codeExamples.binarySearch.javascript);
+    setMessage(`${value} not found in array using Binary Search`);
+    setHighlighted([]);
     setOperation("");
-    setSecondArray([]);
+    await delay(2000);
+    setMessage("");
+    setSearchValue("");
+  };
+
+  const reverseArray = async (): Promise<void> => {
+    setOperation("rotated");
+    const arr = [...array].reverse();
+    setArray(arr);
+    setCode(codeExamples.reverse.javascript);
+    setMessage("Array reversed");
+    await delay(700);
+    setOperation("");
+    await delay(2000);
+    setMessage("");
+  };
+
+  const deleteElement = async (): Promise<void> => {
+    const index = Number(deleteIndex);
+    if (!isNaN(index) && index >= 0 && index < array.length) {
+      setOperation("deleted");
+      setHighlighted([index]);
+      await delay(500);
+      const arr = [...array];
+      const deletedValue = arr.splice(index, 1)[0];
+      setArray(arr);
+      setCode(codeExamples.delete.javascript);
+      setMessage(`Deleted ${deletedValue} from index ${index}`);
+      setHighlighted([]);
+      setOperation("");
+      setDeleteIndex("");
+      await delay(2000);
+      setMessage("");
+    }
   };
 
   const splitArray = async (): Promise<void> => {
@@ -109,19 +190,38 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
       setArray(arr1);
       setSecondArray(arr2);
       setCode(codeExamples.split.javascript);
+      setMessage(`Array split at index ${index}`);
       await delay(500);
       setOperation("");
       setSplitIndex("");
+      await delay(2000);
+      setMessage("");
     }
   };
 
-  const reverseArray = async (): Promise<void> => {
-    setOperation("rotated");
-    const arr = [...array].reverse();
+  const mergeArrays = async (): Promise<void> => {
+    setOperation("merged");
+    const arr = [...array, ...secondArray];
     setArray(arr);
-    setCode(codeExamples.reverse.javascript);
-    await delay(700);
+    setCode(codeExamples.merge.javascript);
+    setMessage(`Merged array with [${secondArray.join(", ")}]`);
+    await delay(500);
     setOperation("");
+    setSecondArray([]);
+    await delay(2000);
+    setMessage("");
+  };
+
+  const traverseArray = async (): Promise<void> => {
+    for (let i = 0; i < array.length; i++) {
+      setHighlighted([i]);
+      await delay(300);
+    }
+    setCode(codeExamples.traverse.javascript);
+    setMessage("Array traversed");
+    setHighlighted([]);
+    await delay(2000);
+    setMessage("");
   };
 
   // Sorting Algorithms
@@ -140,8 +240,11 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
     setCode(codeExamples.bubbleSort.javascript);
     setHighlighted([]);
     setOperation("sorted");
+    setMessage("Array sorted using Bubble Sort");
     await delay(500);
     setOperation("");
+    await delay(2000);
+    setMessage("");
   };
 
   const selectionSort = async (): Promise<void> => {
@@ -162,8 +265,11 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
     setCode(codeExamples.selectionSort.javascript);
     setHighlighted([]);
     setOperation("sorted");
+    setMessage("Array sorted using Selection Sort");
     await delay(500);
     setOperation("");
+    await delay(2000);
+    setMessage("");
   };
 
   const insertionSort = async (): Promise<void> => {
@@ -184,8 +290,11 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
     setCode(codeExamples.insertionSort.javascript);
     setHighlighted([]);
     setOperation("sorted");
+    setMessage("Array sorted using Insertion Sort");
     await delay(500);
     setOperation("");
+    await delay(2000);
+    setMessage("");
   };
 
   const mergeSort = async (arr = [...array], start = 0, end = array.length - 1): Promise<void> => {
@@ -197,16 +306,17 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
     setArray([...arr]);
     setCode(codeExamples.mergeSort.javascript);
     setOperation("sorted");
+    setMessage("Array sorted using Merge Sort");
     await delay(500);
     setOperation("");
+    await delay(2000);
+    setMessage("");
   };
 
   const merge = async (arr: number[], start: number, mid: number, end: number): Promise<void> => {
     const left = arr.slice(start, mid + 1);
     const right = arr.slice(mid + 1, end + 1);
-    let i = 0,
-      j = 0,
-      k = start;
+    let i = 0, j = 0, k = start;
     while (i < left.length && j < right.length) {
       setHighlighted([k]);
       if (left[i] <= right[j]) arr[k++] = left[i++];
@@ -226,60 +336,6 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
       setArray([...arr]);
       await delay(300);
     }
-  };
-
-  // Searching Algorithms
-  const linearSearch = async (): Promise<void> => {
-    const value = Number(searchValue);
-    for (let i = 0; i < array.length; i++) {
-      setHighlighted([i]);
-      setOperation("highlighted");
-      if (array[i] === value) {
-        setOperation("searched");
-        setSearchResult(`Found ${value} at index ${i}`);
-        setCode(codeExamples.linearSearch.javascript); // Fixed typo here
-        await delay(600);
-        setHighlighted([]);
-        setOperation("");
-        return;
-      }
-      await delay(500);
-    }
-    setSearchResult(`${value} not found`);
-    setCode(codeExamples.linearSearch.javascript); // Fixed typo here
-    setHighlighted([]);
-    setOperation("");
-  };
-
-  const binarySearch = async (): Promise<void> => {
-    const arr = [...array].sort((a, b) => a - b);
-    setArray(arr);
-    setOperation("sorted");
-    await delay(500);
-    const value = Number(searchValue);
-    let left = 0,
-      right = arr.length - 1;
-    while (left <= right) {
-      const mid = Math.floor((left + right) / 2);
-      setHighlighted([mid]);
-      setOperation("highlighted");
-      if (arr[mid] === value) {
-        setOperation("searched");
-        setSearchResult(`Found ${value} at index ${mid}`);
-        setCode(codeExamples.binarySearch.javascript); // Fixed typo here
-        await delay(600);
-        setHighlighted([]);
-        setOperation("");
-        return;
-      }
-      if (arr[mid] < value) left = mid + 1;
-      else right = mid - 1;
-      await delay(500);
-    }
-    setSearchResult(`${value} not found`);
-    setCode(codeExamples.binarySearch.javascript); // Fixed typo here
-    setHighlighted([]);
-    setOperation("");
   };
 
   const handleSort = () => {
@@ -364,158 +420,98 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array, setArray, setC
         </motion.div>
       )}
 
-      {/* Operations */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Insert Element</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={insertValue}
-              onChange={(e) => setInsertValue(e.target.value)}
-              placeholder="Value"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <input
-              type="text"
-              value={insertIndex}
-              onChange={(e) => setInsertIndex(e.target.value)}
-              placeholder="Index (optional)"
-              className="p-2 border rounded w-24 text-black" // Fixed className typo
-            />
-            <button onClick={insertElement} className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition">
-              Insert
-            </button>
+      {/* Message Display */}
+      {message && (
+        <div className="mb-6 p-2 bg-green-100 text-green-800 rounded">
+          {message}
+        </div>
+      )}
+
+      {/* Operations - Two Columns */}
+      <div className="flex gap-6">
+        {/* Left Column: Insert, Update, Search, Reverse */}
+        <div className="flex flex-col gap-4 w-1/2">
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Insert Element</label>
+            <div className="flex gap-2">
+              <input type="text" value={insertValue} onChange={(e) => setInsertValue(e.target.value)} placeholder="Value" className="p-2 border rounded w-24 text-black" />
+              <input type="text" value={insertIndex} onChange={(e) => setInsertIndex(e.target.value)} placeholder="Index (optional)" className="p-2 border rounded w-24 text-black" />
+              <button onClick={insertElement} className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition">Insert</button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Update Element</label>
+            <div className="flex gap-2">
+              <input type="text" value={updateIndex} onChange={(e) => setUpdateIndex(e.target.value)} placeholder="Index" className="p-2 border rounded w-24 text-black" />
+              <input type="text" value={updateValue} onChange={(e) => setUpdateValue(e.target.value)} placeholder="Value" className="p-2 border rounded w-24 text-black" />
+              <button onClick={updateElement} className="bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition">Update</button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Search Value</label>
+            <div className="flex gap-2">
+              <input type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Value" className="p-2 border rounded w-24 text-black" />
+              <select value={searchMethod} onChange={(e) => setSearchMethod(e.target.value)} className="p-2 border rounded bg-gray-100 text-black">
+                <option value="linear">Linear Search</option>
+                <option value="binary">Binary Search</option>
+              </select>
+              <button onClick={handleSearch} className="bg-teal-600 text-white p-2 rounded hover:bg-teal-700 transition">Search</button>
+            </div>
+            {searchResult && <p className="text-black font-semibold">{searchResult}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Reverse Array</label>
+            <button onClick={reverseArray} className="bg-orange-600 text-white p-2 rounded hover:bg-orange-700 transition w-24">Reverse</button>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Delete Element</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={deleteIndex}
-              onChange={(e) => setDeleteIndex(e.target.value)} // Fixed syntax error
-              placeholder="Index"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <button onClick={deleteElement} className="bg-red-600 text-white p-2 rounded hover:bg-red-700 transition">
-              Delete
-            </button>
+        {/* Right Column: Delete, Split, Merge, Traverse, Sort */}
+        <div className="flex flex-col gap-4 w-1/2">
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Delete Element</label>
+            <div className="flex gap-2">
+              <input type="text" value={deleteIndex} onChange={(e) => setDeleteIndex(e.target.value)} placeholder="Index" className="p-2 border rounded w-24 text-black" />
+              <button onClick={deleteElement} className="bg-red-600 text-white p-2 rounded hover:bg-red-700 transition">Delete</button>
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Update Element</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={updateIndex}
-              onChange={(e) => setUpdateIndex(e.target.value)}
-              placeholder="Index"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <input
-              type="text"
-              value={updateValue}
-              onChange={(e) => setUpdateValue(e.target.value)}
-              placeholder="Value"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <button onClick={updateElement} className="bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition">
-              Update
-            </button>
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Split Array</label>
+            <div className="flex gap-2">
+              <input type="text" value={splitIndex} onChange={(e) => setSplitIndex(e.target.value)} placeholder="Index" className="p-2 border rounded w-24 text-black" />
+              <button onClick={splitArray} className="bg-rose-600 text-white p-2 rounded hover:bg-rose-700 transition">Split</button>
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Traverse Array</label>
-          <button onClick={traverseArray} className="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 transition">
-            Traverse
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Merge Arrays</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={secondArray.join(",")}
-              onChange={(e) => setSecondArray(e.target.value.split(",").map(Number))}
-              placeholder="Second Array (e.g., 1,2,3)"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <button onClick={mergeArrays} className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 transition">
-              Merge
-            </button>
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Merge Arrays</label>
+            <div className="flex gap-2">
+              <input type="text" value={secondArray.join(",")} onChange={(e) => setSecondArray(e.target.value.split(",").map(Number))} placeholder="Second Array (e.g., 1,2,3)" className="p-2 border rounded w-24 text-black" />
+              <button onClick={mergeArrays} className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 transition">Merge</button>
+            </div>
           </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Split Array</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={splitIndex}
-              onChange={(e) => setSplitIndex(e.target.value)}
-              placeholder="Index"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <button onClick={splitArray} className="bg-rose-600 text-white p-2 rounded hover:bg-rose-700 transition">
-              Split
-            </button>
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Sort Array</label>
+            <div className="flex gap-2">
+              <select value={sortMethod} onChange={(e) => setSortMethod(e.target.value)} className="p-2 border rounded bg-gray-100 text-black">
+                <option value="bubble">Bubble Sort</option>
+                <option value="selection">Selection Sort</option>
+                <option value="insertion">Insertion Sort</option>
+                <option value="merge">Merge Sort</option>
+              </select>
+              <button onClick={handleSort} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 transition">Sort</button>
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Reverse Array</label>
-          <button onClick={reverseArray} className="bg-orange-600 text-white p-2 rounded hover:bg-orange-700 transition">
-            Reverse
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Sort Array</label>
-          <div className="flex gap-2">
-            <select
-              value={sortMethod}
-              onChange={(e) => setSortMethod(e.target.value)}
-              className="p-2 border rounded bg-gray-100 text-black"
-            >
-              <option value="bubble">Bubble Sort</option>
-              <option value="selection">Selection Sort</option>
-              <option value="insertion">Insertion Sort</option>
-              <option value="merge">Merge Sort</option>
-            </select>
-            <button onClick={handleSort} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 transition">
-              Sort
-            </button>
+          <div className="flex flex-col gap-2">
+            <label className="text-black font-medium">Traverse Array</label>
+            <button onClick={traverseArray} className="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 transition w-24">Traverse</button>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-black font-medium">Search Value</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Value"
-              className="p-2 border rounded w-24 text-black"
-            />
-            <select
-              value={searchMethod}
-              onChange={(e) => setSearchMethod(e.target.value)}
-              className="p-2 border rounded bg-gray-100 text-black"
-            >
-              <option value="linear">Linear Search</option>
-              <option value="binary">Binary Search</option>
-            </select>
-            <button onClick={handleSearch} className="bg-teal-600 text-white p-2 rounded hover:bg-teal-700 transition">
-              Search
-            </button>
-          </div>
-          {searchResult && <p className="text-black font-semibold">{searchResult}</p>}
+          
         </div>
       </div>
     </div>
