@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import StackVisualizer from "../../components/stack/StackVisualizer";
-import CodeDisplay from "../../components/tree/CodeDisplay"; // Correct path assuming components folder
+import CodeDisplay from "../../components/stack/CodeDisplay"; // Correct path assuming components folder
 
 const StackPage: React.FC = () => {
   const [stack, setStack] = useState<number[]>([5, 2, 9]);
